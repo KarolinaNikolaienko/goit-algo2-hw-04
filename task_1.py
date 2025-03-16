@@ -1,11 +1,29 @@
-from trie import Trie
+from numpy.core.defchararray import endswith
+
+from trie import Trie, TrieNode
+
 
 class Homework(Trie):
     def count_words_with_suffix(self, pattern) -> int:
-        pass
+        if not isinstance(pattern, str):
+            raise TypeError(f"Illegal argument for countWithSuffix: suffix = {pattern} must be a string")
+
+        counter = 0
+        for _word in self.keys():
+            if endswith(_word, suffix=pattern):
+                counter += 1
+        return counter
 
     def has_prefix(self, prefix) -> bool:
-        pass
+        if not isinstance(prefix, str):
+            raise TypeError(f"Illegal argument for hasPrefix: prefix = {prefix} must be a string")
+
+        current = self.root
+        for char in prefix:
+            if char not in current.children:
+                return False
+            current = current.children[char]
+        return True
 
 if __name__ == "__main__":
     trie = Homework()
